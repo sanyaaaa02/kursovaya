@@ -974,10 +974,449 @@ ______________________________________________
         
    -Каждая регистрация относится к ровно 1 автомобилю.
 
-Заключение:
 
 Определение отношений и их мощности между объектами базы данных ГИБДД является ключевым моментом в проектировании эффективной и структурированной базы данных. Это позволяет обеспечить целостность данных и правильное взаимодействие между сущностями, что в свою очередь способствует более эффективному управлению данными и процессами в рамках ГИБДД.
 
+## 2.4. Построение концептуальной модели.
+Построение концептуальной модели базы данных ГИБДД (Государственной инспекции безопасности дорожного движения) включает в себя определение ключевых сущностей, их атрибутов и взаимосвязей между ними. Концептуальная модель служит основой для дальнейшего проектирования логической и физической моделей базы данных.
+Основные шаги построения концептуальной модели
+
+   Определение сущностей (объектов): Сущности представляют собой объекты, которые необходимо хранить в базе данных.
+   Определение атрибутов: Каждый объект имеет свои характеристики (атрибуты).
+   Определение отношений: Установление взаимосвязей между сущностями.
+   Создание ER-диаграммы: Визуализация концептуальной модели с помощью диаграммы "сущность-связь" (ER-диаграммы).
+
+Определение сущностей и их атрибутов:
+
+   Автомобиль (Car)
+        car_id (PK)
+        vin
+        brand
+        model
+        year
+        color
+        registration_number
+        owner_id (FK)
+
+   Владелец (Owner)
+        owner_id (PK)
+        first_name
+        last_name
+        middle_name
+        date_of_birth
+        phone
+        address
+
+   Нарушение (Violation)
+        violation_id (PK)
+        car_id (FK)
+        violation_date
+        violation_type
+        fine_amount
+        inspector_id (FK)
+
+   Инспектор (Inspector)
+        inspector_id (PK)
+        first_name
+        last_name
+        middle_name
+        badge_number
+        rank
+
+   Регистрация (Registration)
+        registration_id (PK)
+        car_id (FK)
+        registration_date
+        expiration_date
+        registration_office
+
+Определение отношений:
+
+   Владелец - Автомобиль
+        Один владелец может иметь много автомобилей (1:N).
+        Один автомобиль принадлежит только одному владельцу (N:1).
+
+   Автомобиль - Нарушение
+        Один автомобиль может иметь много нарушений (1:N).
+        Каждое нарушение относится только к одному автомобилю (N:1).
+
+   Инспектор - Нарушение
+        Один инспектор может фиксировать много нарушений (1:N).
+        Каждое нарушение фиксируется только одним инспектором (N:1).
+
+   Автомобиль - Регистрация
+        Один автомобиль может иметь много регистраций (1:N).
+        Каждая регистрация относится только к одному автомобилю (N:1).
 
 
+## 3. Логическая структура БД.
+
+Логическая структура базы данных ГИБДД (Государственная инспекция безопасности дорожного движения) определяет способ организации данных, их структуру и взаимосвязи между сущностями. В отличие от концептуальной модели, которая фокусируется на сущностях и их отношениях, логическая структура устанавливает более подробную структуру данных и правила их хранения.
+Основные сущности и их атрибуты
+
+   Автомобиль (Car)
+        car_id (PK)
+        vin
+        brand
+        model
+        year
+        color
+        registration_number
+        owner_id (FK)
+        car_type
+        fuel_type
+        number_of_doors
+        number_of_seats
+        weight
+        engine_capacity
+        transmission_type
+        drive_type
+
+   Владелец (Owner)
+        owner_id (PK)
+        first_name
+        last_name
+        middle_name
+        date_of_birth
+        phone
+        address
+        driver_license_number
+        driver_license_issue_date
+        driver_license_expiration_date
+
+   Нарушение (Violation)
+        violation_id (PK)
+        car_id (FK)
+        violation_date
+        violation_type
+        fine_amount
+        inspector_id (FK)
+        description
+
+   Инспектор (Inspector)
+        inspector_id (PK)
+        first_name
+        last_name
+        middle_name
+        badge_number
+        rank
+        department_id (FK)
+
+   Регистрация (Registration)
+        registration_id (PK)
+        car_id (FK)
+        registration_date
+        expiration_date
+        registration_office
+        registration_fee
+
+   Офис регистрации (RegistrationOffice)
+        office_id (PK)
+        office_name
+        office_address
+        office_phone
+
+Логические отношения и связи:
+
+   Владелец - Автомобиль
+        Один владелец может иметь много автомобилей (1:N).
+        Один автомобиль принадлежит только одному владельцу (N:1).
+
+   Автомобиль - Нарушение
+        Один автомобиль может иметь много нарушений (1:N).
+        Каждое нарушение относится только к одному автомобилю (N:1).
+
+   Инспектор - Нарушение
+        Один инспектор может фиксировать много нарушений (1:N).
+        Каждое нарушение фиксируется только одним инспектором (N:1).
+
+   Автомобиль - Регистрация
+        Один автомобиль может иметь много регистраций (1:N).
+        Каждая регистрация относится только к одному автомобилю (N:1).
+
+   Инспектор - Офис регистрации
+        Один инспектор принадлежит только одному офису регистрации (N:1).
+        Один офис регистрации имеет много инспекторов (1:N).
+
+## 4.Физическая структура базы данных.
+
+Физическая структура базы данных ГИБДД (Государственной инспекции безопасности дорожного движения) включает в себя детальное описание таблиц, их атрибутов, типов данных, ограничений, индексов и других аспектов, которые обеспечивают эффективное хранение и управление данными. Ниже представлена подробная физическая структура базы данных.
+1. Таблицы и их структуры
+1.1. Таблица Owner (Владелец)
+
+Эта таблица содержит информацию о владельцах автомобилей.
+
+sql
+
+CREATE TABLE Owner (
+
+   owner_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор владельца
+
+   first_name VARCHAR(50) NOT NULL,         -- Имя владельца
+
+   last_name VARCHAR(50) NOT NULL,          -- Фамилия владельца
+
+   middle_name VARCHAR(50),                  -- Отчество владельца
+
+   date_of_birth DATE NOT NULL,              -- Дата рождения
+
+   phone VARCHAR(15),                        -- Телефон владельца
+
+   address VARCHAR(255),                     -- Адрес владельца
+
+   driver_license_number VARCHAR(20) UNIQUE NOT NULL, -- Номер водительского удостоверения
+
+   driver_license_issue_date DATE NOT NULL,  -- Дата выдачи удостоверения
+
+   driver_license_expiration_date DATE NOT NULL -- Дата окончания действия удостоверения
+
+);
+
+1.2. Таблица Car (Автомобиль)
+
+Эта таблица содержит информацию о зарегистрированных автомобилях.
+
+sql
+
+CREATE TABLE Car (
+
+   car_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор автомобиля
+
+   vin VARCHAR(17) UNIQUE NOT NULL,       -- VIN номер автомобиля
+
+   brand VARCHAR(50) NOT NULL,            -- Марка автомобиля
+
+   model VARCHAR(50) NOT NULL,            -- Модель автомобиля
+
+   year INT CHECK (year >= 1886 AND year <= YEAR(CURDATE())), -- Год выпуска
+
+   color VARCHAR(30),                      -- Цвет автомобиля
+
+   registration_number VARCHAR(20) UNIQUE NOT NULL, -- Регистрационный номер
+
+   owner_id INT,                          -- Идентификатор владельца
+
+   car_type VARCHAR(30),                  -- Тип автомобиля (легковой, грузовой и т.д.)
+
+   fuel_type VARCHAR(30),                 -- Тип топлива
+
+   number_of_doors INT,                   -- Количество дверей
+
+   number_of_seats INT,                   -- Количество мест
+
+   weight DECIMAL(10, 2),                 -- Вес автомобиля
+
+   engine_capacity DECIMAL(5, 2),         -- Объем двигателя
+
+   transmission_type VARCHAR(20),          -- Тип трансмиссии (механическая, автоматическая)
+
+   drive_type VARCHAR(20),                 -- Тип привода (передний, задний, полный)
+
+   FOREIGN KEY (owner_id) REFERENCES Owner(owner_id) -- Внешний ключ на владельца
+
+);
+
+1.3. Таблица Violation (Нарушение)
+
+Эта таблица содержит информацию о нарушениях правил дорожного движения.
+
+sql
+
+CREATE TABLE Violation (
+
+   violation_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор нарушения
+
+   car_id INT,                                 -- Идентификатор автомобиля
+
+   violation_date DATE NOT NULL,               -- Дата нарушения
+
+   violation_type VARCHAR(50) NOT NULL,        -- Тип нарушения
+
+   fine_amount DECIMAL(10, 2) NOT NULL,       -- Сумма штрафа
+
+   inspector_id INT,                           -- Идентификатор инспектора
+
+   description TEXT,                           -- Описание нарушения
+
+   FOREIGN KEY (car_id) REFERENCES Car(car_id), -- Внешний ключ на автомобиль
+
+   FOREIGN KEY (inspector_id) REFERENCES Inspector(inspector_id) -- Внешний ключ на инспектора
+
+);
+
+1.4. Таблица Inspector (Инспектор)
+
+Эта таблица содержит информацию о инспекторах ГИБДД.
+
+sql
+
+CREATE TABLE Inspector (
+
+   inspector_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор инспектора
+
+   first_name VARCHAR(50) NOT NULL,            -- Имя инспектора
+
+   last_name VARCHAR(50) NOT NULL,             -- Фамилия инспектора
+
+   middle_name VARCHAR(50),                     -- Отчество инспектора
+
+   badge_number VARCHAR(20) UNIQUE NOT NULL,    -- Номер значка
+
+   rank VARCHAR(30),                            -- Звание
+
+   department_id INT,                           -- Идентификатор отдела
+
+   FOREIGN KEY (department_id) REFERENCES RegistrationOffice(office_id) -- Внешний ключ на офис регистрации
+
+);
+
+1.5. Таблица Registration (Регистрация)
+
+Эта таблица содержит информацию о регистрации автомобилей.
+
+sql
+
+CREATE TABLE Registration (
+
+   registration_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор регистрации
+
+  ##5. Реализация проекта в среде конкретной СУБД.
+5.1. Создание таблиц.
+1. Создание таблицы Owner (Владелец)
+
+sql
+
+CREATE TABLE Owner (
+
+   owner_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор владельца
+
+   first_name VARCHAR(50) NOT NULL,         -- Имя владельца
+
+   last_name VARCHAR(50) NOT NULL,          -- Фамилия владельца
+
+   middle_name VARCHAR(50),                  -- Отчество владельца
+
+   date_of_birth DATE NOT NULL,              -- Дата рождения
+
+   phone VARCHAR(15),                        -- Телефон владельца
+    
+   address VARCHAR(255),                     -- Адрес владельца
+
+   driver_license_number VARCHAR(20) UNIQUE NOT NULL, -- Номер водительского удостоверения
+
+   driver_license_issue_date DATE NOT NULL,  -- Дата выдачи удостоверения
+
+   driver_license_expiration_date DATE NOT NULL -- Дата окончания действия удостоверения
+
+);
+
+2. Создание таблицы Car (Автомобиль)
+
+sql
+
+CREATE TABLE Car (
+
+   car_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор автомобиля
+
+   vin VARCHAR(17) UNIQUE NOT NULL,       -- VIN номер автомобиля
+
+   brand VARCHAR(50) NOT NULL,            -- Марка автомобиля
+
+   model VARCHAR(50) NOT NULL,            -- Модель автомобиля
+
+   year INT CHECK (year >= 1886 AND year <= YEAR(CURDATE())), -- Год выпуска
+
+   color VARCHAR(30),                      -- Цвет автомобиля
+
+   registration_number VARCHAR(20) UNIQUE NOT NULL, -- Регистрационный номер
+
+   owner_id INT,                          -- Идентификатор владельца
+
+   car_type VARCHAR(30),                  -- Тип автомобиля (легковой, грузовой и т.д.)
+
+   fuel_type VARCHAR(30),                 -- Тип топлива
+
+   number_of_doors INT,                   -- Количество дверей
+
+   number_of_seats INT,                   -- Количество мест
+
+   weight DECIMAL(10, 2),                 -- Вес автомобиля
+
+   engine_capacity DECIMAL(5, 2),         -- Объем двигателя
+
+   transmission_type VARCHAR(20),          -- Тип трансмиссии (механическая, автоматическая)
+
+   drive_type VARCHAR(20),                 -- Тип привода (передний, задний, полный)
+
+   FOREIGN KEY (owner_id) REFERENCES Owner(owner_id) -- Внешний ключ на владельца
+
+);
+
+3. Создание таблицы Violation (Нарушение)
+
+sql
+
+CREATE TABLE Violation (
+
+   violation_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор нарушения
+
+   car_id INT,                                 -- Идентификатор автомобиля
+
+   violation_date DATE NOT NULL,               -- Дата нарушения
+
+   violation_type VARCHAR(50) NOT NULL,        -- Тип нарушения
+
+   fine_amount DECIMAL(10, 2) NOT NULL,       -- Сумма штрафа
+
+   inspector_id INT,                           -- Идентификатор инспектора
+
+   description TEXT,                           -- Описание нарушения
+
+   FOREIGN KEY (car_id) REFERENCES Car(car_id), -- Внешний ключ на автомобиль
+
+   FOREIGN KEY (inspector_id) REFERENCES Inspector(inspector_id) -- Внешний ключ на инспектора
+
+);
+
+4. Создание таблицы Inspector (Инспектор)
+
+sql
+
+CREATE TABLE Inspector (
+
+   inspector_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор инспектора
+
+   first_name VARCHAR(50) NOT NULL,            -- Имя инспектора
+
+   last_name VARCHAR(50) NOT NULL,             -- Фамилия инспектора
+
+   middle_name VARCHAR(50),                     -- Отчество инспектора
+
+   badge_number VARCHAR(20) UNIQUE NOT NULL,    -- Номер значка
+
+   rank VARCHAR(30),                            -- Звание
+
+   department_id INT,                           -- Идентификатор отдела
+
+   FOREIGN KEY (department_id) REFERENCES RegistrationOffice(office_id) -- Внешний ключ на офис регистрации
+
+);
+
+5. Создание таблицы Registration (Регистрация)
+
+sql
+
+CREATE TABLE Registration (
+
+   registration_id INT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор регистрации
+
+   car_id INT,                                   -- Идентификатор автомобиля
+
+   registration_date DATE NOT NULL,              -- Дата регистрации
+
+   expiration_date DATE NOT NULL,                -- Дата окончания регистрации
+
+   registration_office VARCHAR(100),             -- Офис регистрации
+
+   registration_fee DECIMAL(10, 2),             -- Сумма регистра
 
